@@ -9,72 +9,65 @@ import { setBusinesses } from '../stores/businesses';
 const BusinessList = () => {
   const [businessList, setBusinessList] = useState([]);
 
-  useEffect(() => {
-    async function setBusinessListFromAPI() {
-      const response = await queryBusinesses();
-      setBusinessList(response);
-      setBusinesses(response);
-    }
-    setBusinessListFromAPI();
-  }, []);
+export default function BusinessList() {
+    const [businesses, setBusinesses] = useState([]);
 
-  return (
-    <FlatList
-      ItemSeparatorComponent={() => (
-        <Text style={[styles.separator]}>{''}</Text>
-      )}
-      data={businessList}
-      keyExtractor={(item) => get(item, '3.value') + ''}
-      renderItem={({ item, separators }) => (
-        <TouchableHighlight
-          key={get(item, '3.value')}
-          onPress={() => this._onPress(item)}
-          onShowUnderlay={separators.highlight}
-          onHideUnderlay={separators.unhighlight}
-        >
-          <View style={{ backgroundColor: colors.backgroundColor }}>
-            <Text style={styles.title}>{get(item, '6.value') + ''}</Text>
-            <View>
-              <Text style={styles.subTitle}>{'Business type'}</Text>
-              <Text style={styles.metadata}>{get(item, '15.value', '')}</Text>
-            </View>
-            <View>
-              <Text style={styles.subTitle}>{'Services'}</Text>
-              <Text style={styles.metadata}>{get(item, '16.value', '') + ''}</Text>
-            </View>
-          </View>
-        </TouchableHighlight>
-      )}
-    />
+    useEffect(() => {
+      async function setBusinessesFromAPI() {
+        const response = await queryBusinesses();
+        setBusinesses(response);
+      }
+      setBusinessesFromAPI();
+    });
+    return(
+        <FlatList
+            data={businesses}
+            keyExtractor={item => get(item, '3.value') + ''}
+            renderItem={({item, separators}) => (
+            <TouchableHighlight
+                key={get(item, '3.value')}
+                onShowUnderlay={separators.highlight}
+                onHideUnderlay={separators.unhighlight}>
+                <View style={styles.view}>
+                    <Text style={styles.title}>{get(item, '6.value') + ''}</Text>
+                    <View>
+                        <Text style={styles.subTitle}>{'Business type'}</Text>
+                        <Text style={styles.metadata}>{get(item, '15.value', '')}</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.subTitle}>{'Services'}</Text>
+                        <Text style={styles.metadata}>{get(item, '16.value', '') + ''}</Text>
+                    </View>
+                </View>
+            </TouchableHighlight>
+            )}
+            >
+        </FlatList>
   );
 };
 
 const styles = StyleSheet.create({
-  separator: {
-    backgroundColor: colors.gray,
-    borderBottomColor: colors.gray,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  subTitle: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  metadata: {
-    fontSize: 15,
-    fontWeight: 'normal',
-    textTransform: 'lowercase',
-  },
+    view: {
+      backgroundColor: colors.backgroundColor,
+      padding: 15,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.gray,
+    },
+    separator: {
+      backgroundColor: colors.gray,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    subTitle: {
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+    metadata: {
+        fontSize: 15,
+        fontWeight: 'normal',
+        textTransform: 'lowercase',
+    },
 });
-
-const mapStateToProps = ({ businesses }) => ({
-  businesses: businesses.businesses,
-});
-
-const mapDispatchToProps = {
-  setBusinesses,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BusinessList);
