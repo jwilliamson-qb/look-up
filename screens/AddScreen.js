@@ -1,15 +1,41 @@
 import React, { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Button, Text, Label } from 'native-base';
+import { submitBusiness } from '../services/qbapi';
 
 
 
 export default function AddScreen() {
   const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({})
 
-  const submitBusiness = () => {
+  const submit = async () => {
+    if (formData['6'] && formData['6'].value &&
+      formData['8'] && formData['8'].value &&
+      formData['10'] && formData['10'].value &&
+      formData['11'] && formData['11'].value &&
+      formData['12'] && formData['12'].value &&
+      formData['14'] && formData['14'].value &&
+      formData['15'] && formData['15'].value) {
+      const response = await submitBusiness(formData);
+      if (!response.lineErrors) {
+        setFormData({});
+        setSubmitted(true);
+      } else {
+        Alert.alert('An Error Occurred');
+      }
+    } else {
+      Alert.alert('Missing Required Fields', 'Please fill out Business Name, Address, Phone Number, and Business Type');
+    }
+  }
 
-    setSubmitted(true);
+  const setField = (fieldId, value) => {
+    setFormData({
+      ...formData,
+      [fieldId]: {
+        value,
+      }
+    })
   }
 
   if (submitted) {
@@ -39,30 +65,42 @@ export default function AddScreen() {
         <Text>- We verify the submitted business details</Text>
         <Form style={styles.form}>
           <Item floatingLabel>
-            <Label>Business Name</Label>
-            <Input />
+            <Label>Business Name*</Label>
+            <Input onChangeText={(text) => setField('6', text)} />
           </Item>
           <Item floatingLabel>
-            <Label>Address</Label>
-            <Input />
+            <Label>Address (Street)*</Label>
+            <Input onChangeText={(text) => setField('8', text)} />
           </Item>
           <Item floatingLabel>
-            <Label>Phone Number</Label>
-            <Input />
+            <Label>Address (City)*</Label>
+            <Input onChangeText={(text) => setField('10', text)} />
           </Item>
           <Item floatingLabel>
-            <Label>Type (Restaurant, Cafe, Bookstore)</Label>
-            <Input />
+            <Label>Address (State)*</Label>
+            <Input onChangeText={(text) => setField('11', text)} />
+          </Item>
+          <Item floatingLabel>
+            <Label>Address (Zip)*</Label>
+            <Input onChangeText={(text) => setField('12', text)} />
+          </Item>
+          <Item floatingLabel>
+            <Label>Phone Number*</Label>
+            <Input onChangeText={(text) => setField('14', text)} />
+          </Item>
+          <Item floatingLabel>
+            <Label>Business Type* (Restaurant, Cafe, Bookstore)</Label>
+            <Input onChangeText={(text) => setField('15', text)} />
           </Item>
           <Item floatingLabel>
             <Label>Tags (Coffee, Dessert, Second-hand)</Label>
-            <Input />
+            <Input onChangeText={(text) => setField('16', text.split(', '))} />
           </Item>
           <Item floatingLabel>
             <Label>Link (URL to Website)</Label>
-            <Input />
+            <Input onChangeText={(text) => setField('17', text)} />
           </Item>
-          <Button bordered onPress={submitBusiness} style={styles.buttonStyle} title="Submit">
+          <Button bordered onPress={submit} style={styles.buttonStyle} title="Submit">
             <Text style={styles.buttonTextStyle}>Submit!</Text>
           </Button>
         </Form>
@@ -75,10 +113,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fafafa',
-    padding: 15,
   },
   contentContainer: {
-    paddingTop: 15,
+    padding: 15,
   },
   heading: {
     fontWeight: 'bold',
