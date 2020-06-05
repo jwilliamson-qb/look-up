@@ -1,0 +1,14 @@
+android
+ios
+node_modules
+*.png
+*.svg
+*.mp4
+*.ttf
+TODO
+DataDesign
+/src/disclaimers/content.json
+src/services/__testdata__/formData.js
+**/__snapshots__/*.snap
+*.md
+*.json
