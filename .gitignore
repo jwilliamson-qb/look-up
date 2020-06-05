@@ -2,3 +2,7 @@ node_modules/
 
 #IntelliJ configs
 .idea/
+.idea/workspace.xml
+
+# Obscure the secrets :) 
+secrets.js
