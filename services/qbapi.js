@@ -17,6 +17,18 @@ export const queryBusinesses = async () => {
 			}),
 			body: JSON.stringify({
 				"from": businessesTableId,
+				"where": "{19.EX.1}",
+				"select": [
+					3,
+					6,
+					7,
+					14,
+					15,
+					16,
+					17,
+					18,
+					19,
+				  ],
 			})
 		});
 		let json = await response.json();
