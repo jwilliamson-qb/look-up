@@ -8,7 +8,6 @@ export const setBusinesses = (businessObject) => (dispatch) => {
   dispatch(setBusinessesAction(businessObject));
 };
 
-
 const setBusinessesAction = (businessObject) => ({
   type: SET_BUSINESSES,
   businessObject,
