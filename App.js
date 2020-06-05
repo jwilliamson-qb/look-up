@@ -12,6 +12,7 @@ import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 import queryBusinesses from './services/qbapi';
+import { setBusinesses } from './stores/businesses';
 
 const Stack = createStackNavigator();
 
@@ -19,11 +20,12 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
 
   useEffect(() => {
-    async function alertResponse() {
+    async function getBusinesses() {
       const response = await queryBusinesses();
-      // Alert.alert('Response', JSON.stringify(response));
+      setBusinesses(response);
     }
-    alertResponse();
+
+    getBusinesses();
   });
 
   if (!isLoadingComplete) {
