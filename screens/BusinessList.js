@@ -7,7 +7,7 @@ import { queryBusinesses } from '../services/qbapi';
 
 export default function BusinessList() {
     const [businesses, setBusinesses] = useState([]);
-  
+
     useEffect(() => {
       async function setBusinessesFromAPI() {
         const response = await queryBusinesses();
@@ -17,18 +17,14 @@ export default function BusinessList() {
     });
     return(
         <FlatList
-            ItemSeparatorComponent={() => (
-            <Text style={[styles.separator]} >{""}</Text>
-            )}
             data={businesses}
             keyExtractor={item => get(item, '3.value') + ''}
             renderItem={({item, separators}) => (
             <TouchableHighlight
                 key={get(item, '3.value')}
-                onPress={() => this._onPress(item)}
                 onShowUnderlay={separators.highlight}
                 onHideUnderlay={separators.unhighlight}>
-                <View style={{backgroundColor: colors.backgroundColor}}>
+                <View style={styles.view}>
                     <Text style={styles.title}>{get(item, '6.value') + ''}</Text>
                     <View>
                         <Text style={styles.subTitle}>{'Business type'}</Text>
@@ -47,13 +43,19 @@ export default function BusinessList() {
 }
 
 const styles = StyleSheet.create({
+    view: {
+      backgroundColor: colors.backgroundColor,
+      padding: 15,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.gray,
+    },
     separator: {
       backgroundColor: colors.gray,
-      borderBottomColor: colors.gray,
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
+        marginBottom: 5,
     },
     subTitle: {
         fontSize: 15,
