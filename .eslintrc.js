@@ -1,9 +1,12 @@
 module.exports = {
-  extends: 'airbnb',
-  parser: 'babel-eslint',
   env: {
     browser: true,
   },
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+  ],
+  parser: 'babel-eslint',
   rules: {
     'arrow-body-style': 'off',
     'no-underscore-dangle': 'off',
@@ -29,20 +32,4 @@ module.exports = {
     'import/no-named-as-default': 0,
     'import/no-named-as-default-member': 0,
   },
-  overrides: [
-    {
-      files: ['e2e/*.js', 'wdio/*.js', 'wdio/**/*.js', '**/**/__tests__/*.js'],
-      rules: {
-        'no-undef': 'off',
-      },
-    },
-    {
-      files: ['wdio/*.conf.js'],
-      rules: {
-        'no-unused-vars': 'off',
-        'global-require': 'off',
-        'import/no-extraneous-dependencies': 'off',
-      },
-    },
-  ],
 };
