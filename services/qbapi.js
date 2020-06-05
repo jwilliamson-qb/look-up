@@ -28,13 +28,35 @@ export const queryBusinesses = async () => {
           17,
           18,
           19,
-				  ],
+        ],
       }),
     });
     const json = await response.json();
     console.log(json);
     // Return only the records (not the schema)
     return json.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const submitBusiness = async (data) => {
+  try {
+    const response = await fetch('https://api.quickbase.com/v1/records', {
+      method: 'post',
+      headers: new Headers({
+        ...headers,
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify({
+        'to': businessesTableId,
+        data: [data],
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+    // Return the metadata
+    return json.metadata;
   } catch (error) {
     console.error(error);
   }
