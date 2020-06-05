@@ -5,7 +5,7 @@ const businessesTableId = 'bqkc32ypy';
 const headers = {
 	'QB-Realm-Hostname': 'team.quickbase.com',
 	'Authorization': `QB-USER-TOKEN ${USER_TOKEN}`
-}
+};
 
 export const queryBusinesses = async () => {
 	try {
@@ -38,4 +38,26 @@ export const queryBusinesses = async () => {
 	} catch (error) {
 		console.error(error);
 	}
-}
+};
+
+export const submitBusiness = async (data) => {
+	try {
+		let response = await fetch(`https://api.quickbase.com/v1/records`,{
+			method: 'post',
+			headers: new Headers({
+				...headers,
+				'Content-Type': 'application/json',
+			}),
+			body: JSON.stringify({
+				"to": businessesTableId,
+				data: [data],
+			})
+		});
+		let json = await response.json();
+		console.log(json);
+		// Return the metadata
+		return json.metadata;
+	} catch (error) {
+		console.error(error);
+	}
+};
