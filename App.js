@@ -21,7 +21,7 @@ export default function App() {
   useEffect(() => {
     async function alertResponse() {
       const response = await queryBusinesses();
-      Alert.alert('Response', JSON.stringify(response));
+      // Alert.alert('Response', JSON.stringify(response));
     }
     alertResponse();
   });
