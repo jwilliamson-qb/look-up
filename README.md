@@ -1,4 +1,4 @@
-# look-up
+# LookUp
 A listing of local minority-owned businesses
 
 # How to Run
