@@ -7,7 +7,7 @@ const headers = {
   'Authorization': `QB-USER-TOKEN ${USER_TOKEN}`,
 };
 
-const queryBusinesses = async () => {
+export const queryBusinesses = async () => {
   try {
     const response = await fetch('https://api.quickbase.com/v1/records/query', {
       method: 'post',
@@ -17,6 +17,18 @@ const queryBusinesses = async () => {
       }),
       body: JSON.stringify({
         'from': businessesTableId,
+        'where': '{19.EX.1}',
+        'select': [
+          3,
+          6,
+          7,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+				  ],
       }),
     });
     const json = await response.json();
@@ -27,5 +39,3 @@ const queryBusinesses = async () => {
     console.error(error);
   }
 };
-
-export default queryBusinesses;
