@@ -1,4 +1,8 @@
 node_modules/
-secrets.js
-settings.json
+
+#IntelliJ configs
+.idea/
 .idea/workspace.xml
+
+# Obscure the secrets :) 
+secrets.js
