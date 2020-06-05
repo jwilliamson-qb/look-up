@@ -9,7 +9,7 @@ Once you've set these up, you can launch your app on an Android Virtual Device b
   - [x] React Navigation - Jon
   - [ ] Redux / Redux Persist - Josh
 - [x] Create QB App with Business Table - Jon
-- [ ] Create API Service (get API / App Token) - Jon
+- [x] Create API Service (get API / App Token) - Jon
 - [ ] Create Screens
   - [ ] List Screen - Liz
       - Lists results sorted by distance
