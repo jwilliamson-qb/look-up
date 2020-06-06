@@ -1,16 +1,16 @@
 export const initialState = {
-  businesses: [],
+  all: [],
 };
 
 const SET_BUSINESSES = 'SET_BUSINESSES';
 
-export const setBusinesses = (businessObject) => (dispatch) => {
-  dispatch(setBusinessesAction(businessObject));
+export const setBusinesses = (businessesArray) => (dispatch) => {
+  dispatch(setBusinessesAction(businessesArray));
 };
 
-const setBusinessesAction = (businessObject) => ({
+const setBusinessesAction = (businessesArray) => ({
   type: SET_BUSINESSES,
-  businessObject,
+  businessesArray,
 });
 
 export const businesses = (state = initialState, action) => {
@@ -18,7 +18,7 @@ export const businesses = (state = initialState, action) => {
     case SET_BUSINESSES:
       return {
         ...state,
-        businesses: action.businessObject,
+        all: action.businessesArray,
       };
     default:
       return state;

@@ -9,6 +9,7 @@ import { store, persister } from './store';
 import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
+import BusinessDetail from './screens/BusinessDetail';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ export default function App() {
           <NavigationContainer linking={LinkingConfiguration}>
             <Stack.Navigator>
               <Stack.Screen name="Root" component={BottomTabNavigator} />
+              <Stack.Screen name="Detail" component={BusinessDetail} />
             </Stack.Navigator>
           </NavigationContainer>
         </View>
