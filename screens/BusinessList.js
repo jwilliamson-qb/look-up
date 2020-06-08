@@ -29,44 +29,60 @@ const BusinessList = (props) => {
   }, []);
 
   return (
-    <FlatList
-      data={businessList}
-      keyExtractor={(item) => get(item, '3.value') + ''}
-      renderItem={({ item, separators }) => (
-        <TouchableOpacity
-          key={get(item, '3.value')}
-          onShowUnderlay={separators.highlight}
-          onHideUnderlay={separators.unhighlight}
-          onPress={() => navigation.navigate('Detail', { detail: item })}
-        >
-          <View style={styles.view}>
-            <Text style={styles.title}>{get(item, '6.value') + ''}</Text>
-            <View>
-              <Text style={styles.subTitle}>{'Business type'}</Text>
-              <Text style={styles.metadata}>{get(item, '15.value', '')}</Text>
+    <View style={styles.container}>
+      <FlatList
+        data={businessList}
+        style={styles.container}
+        keyExtractor={(item) => get(item, '3.value') + ''}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            key={get(item, '3.value')}
+            style={styles.view}
+            onPress={() => navigation.navigate('Detail', { detail: item })}
+          >
+            <View style={styles.leftSide}>
+              <Text style={styles.type}>{get(item, '15.value', '')}</Text>
+              <Text style={styles.title}>{get(item, '6.value') + ''}</Text>
+              <View>
+                <Text style={styles.subTitle}>{'Services'}</Text>
+                <Text style={styles.metadata}>{get(item, '16.value', '') + ''}</Text>
+              </View>
             </View>
-            <View>
-              <Text style={styles.subTitle}>{'Services'}</Text>
-              <Text style={styles.metadata}>{get(item, '16.value', '') + ''}</Text>
+            <View style={styles.rightSide}>
+              <Text style={styles.distance}>{(Math.random() * 5).toFixed(1) + ' m away'}</Text>
             </View>
-          </View>
-        </TouchableOpacity>
-      )}
-      onRefresh={setBusinessesFromAPI}
-      refreshing={refreshing}
-    />
+          </TouchableOpacity>
+        )}
+        onRefresh={setBusinessesFromAPI}
+        refreshing={refreshing}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  view: {
+  container: {
+    flex: 1,
     backgroundColor: colors.backgroundColor,
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.gray,
+    borderTopLeftRadius: 25,
+    // marginTop: 30,
+    overflow: 'hidden',
   },
-  separator: {
-    backgroundColor: colors.gray,
+  view: {
+    padding: 15,
+    margin: 10,
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.13,
+    shadowRadius: 2.62,
+    elevation: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 20,
@@ -77,10 +93,28 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
   },
+  type: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    color: colors.tintColor,
+  },
   metadata: {
     fontSize: 15,
     fontWeight: 'normal',
     textTransform: 'lowercase',
+  },
+  leftSide: {
+    flex: 1,
+  },
+  rightSide: {
+    borderLeftWidth: 1,
+    borderLeftColor: colors.gray,
+    paddingLeft: 15,
+    justifyContent: 'center',
+  },
+  distance: {
+    color: colors.tintColor,
   },
 });
 

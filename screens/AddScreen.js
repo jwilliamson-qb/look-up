@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Button, Text, Label } from 'native-base';
 import { submitBusiness } from '../services/qbapi';
+import Colors from '../constants/Colors';
 
 
 
@@ -112,10 +113,13 @@ export default function AddScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: Colors.black,
   },
   contentContainer: {
-    padding: 15,
+    padding: 20,
+    backgroundColor: '#fafafa',
+    // borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
   },
   heading: {
     fontWeight: 'bold',

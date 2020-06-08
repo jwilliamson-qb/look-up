@@ -4,6 +4,7 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import BusinessList from './BusinessList';
 
 import { MonoText } from '../components/StyledText';
+import Colors from '../constants/Colors';
 
 export default function HomeScreen() {
   return (
@@ -53,7 +54,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.black,
   },
   developmentModeText: {
     marginBottom: 20,
