@@ -4,7 +4,7 @@ import { API_TOKEN } from '../secrets';
 // eslint-disable-next-line import/prefer-default-export
 export const calculateDistance = async (businesses, locationData) => {
   if (!locationData) {
-    return {};
+    return [];
   }
   try {
     const concatenatedAddressString = concatenateAddresses(businesses);
@@ -25,9 +25,10 @@ export const calculateDistance = async (businesses, locationData) => {
     );
 
     const json = await response.json();
-    return json.rows[0].elements;
+    return get(json, 'rows.0.elements', []);
   } catch (error) {
     console.error(error);
+    return [];
   }
 };
 

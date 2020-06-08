@@ -23,16 +23,20 @@ const BusinessList = (props) => {
     setRefreshing(true);
     const response = await queryBusinesses();
     if (response) {
-      const distances = await calculateDistance(businesses, location);
-      const businessesWithDistance = businesses.map((business, index) => {
-        const meters = get(distances[index], 'distance.value', 0);
-        const miles = parseFloat((meters / 1609.344).toFixed(1));
-        return {
-          ...business,
-          distance: miles,
-        };
-      });
-      props.setBusinesses(businessesWithDistance);
+      if (location) {
+        const distances = await calculateDistance(response, location);
+        const businessesWithDistance = response.map((business, index) => {
+          const meters = get(distances[index], 'distance.value', 0);
+          const miles = parseFloat((meters / 1609.344).toFixed(1));
+          return {
+            ...business,
+            distance: miles,
+          };
+        });
+        props.setBusinesses(businessesWithDistance);
+      } else {
+        props.setBusinesses(businesses);
+      }
     }
     setRefreshing(false);
   }
