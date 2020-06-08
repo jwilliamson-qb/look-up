@@ -42,12 +42,14 @@ export default function AddScreen() {
     return (
       <Container style={styles.container}>
         <Content style={styles.contentContainer}>
-          <Text>Thank you for your submission! It should be added to our app shortly.</Text>
-          <Text style={styles.heading}>What we look for:</Text>
-          <Text style={styles.bullet}>- We contact the business to verify its ownership</Text>
-          <Text style={styles.bullet}>- We verify the business's online presence</Text>
-          <Text style={styles.bullet}>- We verify the submitted business details</Text>
-          <Button bordered onPress={() => setSubmitted(false)} style={styles.buttonStyle} title="Submit Another">
+          <View style={styles.infoHeading}>
+            <Text>Thank you for your submission! It should be added to our app shortly.</Text>
+            <Text style={styles.heading}>What we look for:</Text>
+            <Text style={styles.bullet}>- We contact the business to verify its ownership</Text>
+            <Text style={styles.bullet}>- We verify the business's online presence</Text>
+            <Text style={styles.bullet}>- We verify the submitted business details</Text>
+          </View>
+          <Button onPress={() => setSubmitted(false)} style={styles.buttonStyle} title="Submit Another">
             <Text style={styles.buttonTextStyle}>Submit Another</Text>
           </Button>
         </Content>
