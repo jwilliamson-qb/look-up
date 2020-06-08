@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   form: {
+    paddingBottom: 30,
   },
   buttonStyle: {
     marginTop: 15,
@@ -137,5 +138,5 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     flex: 1,
     textAlign: 'center',
-  }
+  },
 });
