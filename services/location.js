@@ -21,7 +21,7 @@ export const calculateDistance = async (businesses, locationData) => {
     );
 
     const json = await response.json();
-    return json;
+    return json.rows;
   } catch (error) {
     console.error(error);
   }
