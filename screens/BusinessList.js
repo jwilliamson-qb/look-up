@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import get from 'lodash/get';
 import { connect } from 'react-redux';
 import { sortBy } from 'lodash';
+import { Ionicons } from '@expo/vector-icons';
 import colors from '../constants/Colors';
 import { queryBusinesses } from '../services/qbapi';
 import { setBusinesses } from '../stores/businesses';
@@ -71,8 +72,16 @@ const BusinessList = (props) => {
                 <Text style={styles.type}>{get(item, '15.value', '')}</Text>
                 <Text style={styles.title}>{get(item, '6.value') + ''}</Text>
                 <View>
-                  <Text style={styles.subTitle}>{'Services'}</Text>
                   <Text style={styles.metadata}>{get(item, '16.value', '') + ''}</Text>
+                  <Text style={styles.italic}>
+                    <Ionicons
+                      name="md-pin"
+                      size={18}
+                      style={{ margin: 4 }}
+                      color={colors.yellow}
+                    />
+                    {' ' + get(item, '10.value', '') + ', ' + get(item, '11.value', '')}
+                  </Text>
                 </View>
               </View>
               {!!get(item, 'distance') && (
@@ -143,6 +152,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'normal',
     textTransform: 'lowercase',
+  },
+  italic: {
+    marginTop: 3,
+    fontStyle: 'italic',
+    fontSize: 14,
   },
   leftSide: {
     flex: 1,
