@@ -10,6 +10,7 @@ import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 import BusinessDetail from './screens/BusinessDetail';
+import LocationProvider from './hooks/LocationProvider';
 
 const Stack = createStackNavigator();
 
@@ -23,15 +24,17 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persister}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-          <NavigationContainer linking={LinkingConfiguration}>
-            <Stack.Navigator>
-              <Stack.Screen name="Root" component={BottomTabNavigator} />
-              <Stack.Screen name="Detail" component={BusinessDetail} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </View>
+        <LocationProvider>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+            <NavigationContainer linking={LinkingConfiguration}>
+              <Stack.Navigator>
+                <Stack.Screen name="Root" component={BottomTabNavigator} />
+                <Stack.Screen name="Detail" component={BusinessDetail} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </View>
+        </LocationProvider>
       </PersistGate>
     </Provider>
   );
