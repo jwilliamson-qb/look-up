@@ -11,15 +11,18 @@ import { setBusinesses } from '../stores/businesses';
 const BusinessList = (props) => {
   const { businesses } = props;
   const [businessList, setBusinessList] = useState(businesses);
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    async function setBusinessesFromAPI() {
-      const response = await queryBusinesses();
-      setBusinessList(response);
-      props.setBusinesses(response);
-    }
+  async function setBusinessesFromAPI() {
+    setRefreshing(true);
+    const response = await queryBusinesses();
+    setBusinessList(response);
+    props.setBusinesses(response);
+    setRefreshing(false);
+  }
 
+  useEffect(() => {
     if (isEmpty(businesses)) {
       setBusinessesFromAPI();
     }
@@ -49,6 +52,8 @@ const BusinessList = (props) => {
           </View>
         </TouchableOpacity>
       )}
+      onRefresh={setBusinessesFromAPI}
+      refreshing={refreshing}
     />
   );
 };
