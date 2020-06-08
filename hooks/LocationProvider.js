@@ -1,11 +1,11 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, } from 'react';
 import * as Location from 'expo-location';
 import { setLocationData } from '../stores/location';
 
 
-export default function LocationProvider(props) {
+export default function useLocationService() {
   const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [setErrorMsg] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -24,13 +24,5 @@ export default function LocationProvider(props) {
     })();
   }, []);
 
-  // eslint-disable-next-line no-unused-vars
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
-
-  return props.children;
+  return location;
 }

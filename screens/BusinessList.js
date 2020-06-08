@@ -7,12 +7,14 @@ import { connect } from 'react-redux';
 import colors from '../constants/Colors';
 import { queryBusinesses } from '../services/qbapi';
 import { setBusinesses } from '../stores/businesses';
+import useLocationService from '../hooks/LocationProvider';
 
 const BusinessList = (props) => {
   const { businesses } = props;
   const [businessList, setBusinessList] = useState(businesses);
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
+  const location = useLocationService();
 
   async function setBusinessesFromAPI() {
     setRefreshing(true);
@@ -30,6 +32,7 @@ const BusinessList = (props) => {
 
   return (
     <View style={styles.container}>
+      <Text>{JSON.stringify(location)}</Text>
       <FlatList
         data={businessList}
         style={styles.container}
@@ -49,7 +52,7 @@ const BusinessList = (props) => {
               </View>
             </View>
             <View style={styles.rightSide}>
-              <Text style={styles.distance}>{(Math.random() * 5).toFixed(1) + ' m away'}</Text>
+              <Text style={styles.distance}>{' :P m away'}</Text>
             </View>
           </TouchableOpacity>
         )}

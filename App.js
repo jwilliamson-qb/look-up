@@ -10,7 +10,6 @@ import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 import BusinessDetail from './screens/BusinessDetail';
-import LocationProvider from './hooks/LocationProvider';
 import Colors from './constants/Colors';
 
 const Stack = createStackNavigator();
@@ -25,35 +24,33 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persister}>
-        <LocationProvider>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-            <NavigationContainer linking={LinkingConfiguration}>
-              <Stack.Navigator
-                screenOptions={{
-                  headerStyle: {
-                    backgroundColor: Colors.black,
-                    shadowColor: 'transparent',
-                    shadowRadius: 0,
-                    shadowOffset: {
-                      height: 0,
-                    },
-                    height: 120,
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+          <NavigationContainer linking={LinkingConfiguration}>
+            <Stack.Navigator
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: Colors.black,
+                  shadowColor: 'transparent',
+                  shadowRadius: 0,
+                  shadowOffset: {
+                    height: 0,
                   },
-                  headerTintColor: '#fff',
-                  headerTitleStyle: {
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    fontFamily: 'Gill Sans',
-                  },
-                }}
-              >
-                <Stack.Screen name="Root" component={BottomTabNavigator} />
-                <Stack.Screen name="Detail" component={BusinessDetail} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </View>
-        </LocationProvider>
+                  height: 120,
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontFamily: 'Gill Sans',
+                },
+              }}
+            >
+              <Stack.Screen name="Root" component={BottomTabNavigator} />
+              <Stack.Screen name="Detail" component={BusinessDetail} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
       </PersistGate>
     </Provider>
   );
