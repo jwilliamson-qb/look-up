@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
-import { Container, Header, Content, Form, Item, Input, Button, Text, Label } from 'native-base';
+import { Alert, StyleSheet } from 'react-native';
+import { Container, Content, Form, Item, Input, Button, Text, Label } from 'native-base';
 import { submitBusiness } from '../services/qbapi';
 import Colors from '../constants/Colors';
 
 
-
 export default function AddScreen() {
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({});
 
   const submit = async () => {
     if (formData['6'] && formData['6'].value &&
@@ -28,16 +27,16 @@ export default function AddScreen() {
     } else {
       Alert.alert('Missing Required Fields', 'Please fill out Business Name, Address, Phone Number, and Business Type');
     }
-  }
+  };
 
   const setField = (fieldId, value) => {
     setFormData({
       ...formData,
       [fieldId]: {
         value,
-      }
-    })
-  }
+      },
+    });
+  };
 
   if (submitted) {
     return (
@@ -129,6 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   form: {
+    paddingBottom: 30,
   },
   buttonStyle: {
     marginTop: 15,
@@ -138,5 +138,5 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     flex: 1,
     textAlign: 'center',
-  }
+  },
 });
