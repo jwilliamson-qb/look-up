@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Platform, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
@@ -30,7 +30,7 @@ const BusinessList = (props) => {
       data={businessList}
       keyExtractor={(item) => get(item, '3.value') + ''}
       renderItem={({ item, separators }) => (
-        <TouchableHighlight
+        <TouchableOpacity
           key={get(item, '3.value')}
           onShowUnderlay={separators.highlight}
           onHideUnderlay={separators.unhighlight}
@@ -47,7 +47,7 @@ const BusinessList = (props) => {
               <Text style={styles.metadata}>{get(item, '16.value', '') + ''}</Text>
             </View>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       )}
     />
   );
