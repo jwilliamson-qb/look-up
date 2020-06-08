@@ -22,7 +22,7 @@ Once you've set these up, you can launch your app on an Android Virtual Device b
       - Submits a business to be approved
       - List of requirements – text
       - Business Form
-      - Confetti
+      - *_Confetti_*
 - [ ] Capture Location of device & store locally - Liz
   - [ ] GeoFencing - notify me when I pass by a business on the list
   
