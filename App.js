@@ -42,7 +42,7 @@ export default function App() {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                   textTransform: 'uppercase',
-                  fontFamily: 'Gill Sans',
+                  fontFamily: Platform.OS === 'ios' ? 'Gill Sans' : '',
                 },
               }}
             >

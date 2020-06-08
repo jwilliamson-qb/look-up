@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import get from 'lodash/get';
-import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
+import { sortBy } from 'lodash';
 import colors from '../constants/Colors';
 import { queryBusinesses } from '../services/qbapi';
 import { setBusinesses } from '../stores/businesses';
@@ -12,34 +12,37 @@ import { calculateDistance } from '../services/location';
 
 const BusinessList = (props) => {
   const { businesses } = props;
-  const [businessList, setBusinessList] = useState(businesses);
-  const [distances, setDistances] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(true);
   const [filterText, setFilterText] = useState('');
   const navigation = useNavigation();
   const location = useLocationService();
-  async function setBusinessesFromAPI() {
+
+  const sortedBusinesses = sortBy(businesses, ['distance'], ['asc']);
+
+  async function refresh() {
     setRefreshing(true);
     const response = await queryBusinesses();
-    setBusinessList(response);
-    props.setBusinesses(response);
-    setRefreshing(false);
-  }
-
-  async function setDistancesFromAPI() {
-    setRefreshing(true);
-    const distanceResponse = await calculateDistance(businesses, location);
-    setDistances(distanceResponse);
+    if (response) {
+      if (location) {
+        const distances = await calculateDistance(response, location);
+        const businessesWithDistance = response.map((business, index) => {
+          const meters = get(distances[index], 'distance.value', 0);
+          const miles = parseFloat((meters / 1609.344).toFixed(1));
+          return {
+            ...business,
+            distance: miles,
+          };
+        });
+        props.setBusinesses(businessesWithDistance);
+      } else {
+        props.setBusinesses(businesses);
+      }
+    }
     setRefreshing(false);
   }
 
   useEffect(() => {
-    if (isEmpty(businesses)) {
-      setBusinessesFromAPI();
-    }
-    if (isEmpty(distances)) {
-      setDistancesFromAPI();
-    }
+    refresh();
   }, []);
 
   return (
@@ -51,7 +54,7 @@ const BusinessList = (props) => {
         placeholder="Search..."
       />
       <FlatList
-        data={businessList}
+        data={sortedBusinesses}
         style={styles.container}
         keyExtractor={(item) => get(item, '3.value') + ''}
         renderItem={({ item }) => {
@@ -72,16 +75,17 @@ const BusinessList = (props) => {
                   <Text style={styles.metadata}>{get(item, '16.value', '') + ''}</Text>
                 </View>
               </View>
-              <View style={styles.rightSide}>
-                <Text style={styles.distance}>{(Math.random() * 5).toFixed(1) + ' m away'}</Text>
-              </View>
+              {!!get(item, 'distance') && (
+                <View style={styles.rightSide}>
+                  <Text style={styles.distance}>{get(item, 'distance') + ' mi'}</Text>
+                </View>
+              )}
             </TouchableOpacity>
           );
         }}
-        onRefresh={setBusinessesFromAPI}
+        onRefresh={refresh}
         refreshing={refreshing}
       />
-      <Text>{JSON.stringify(location)}</Text>
     </View>
   );
 };
@@ -148,6 +152,8 @@ const styles = StyleSheet.create({
     borderLeftColor: colors.gray,
     paddingLeft: 15,
     justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
   },
   distance: {
     color: colors.tintColor,
