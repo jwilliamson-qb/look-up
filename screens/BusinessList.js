@@ -8,15 +8,16 @@ import colors from '../constants/Colors';
 import { queryBusinesses } from '../services/qbapi';
 import { setBusinesses } from '../stores/businesses';
 import useLocationService from '../hooks/LocationProvider';
+import { calculateDistance } from '../services/location';
 
 const BusinessList = (props) => {
   const { businesses } = props;
   const [businessList, setBusinessList] = useState(businesses);
+  const [distances, setDistances] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [filterText, setFilterText] = useState('');
   const navigation = useNavigation();
   const location = useLocationService();
-
   async function setBusinessesFromAPI() {
     setRefreshing(true);
     const response = await queryBusinesses();
@@ -25,9 +26,19 @@ const BusinessList = (props) => {
     setRefreshing(false);
   }
 
+  async function setDistancesFromAPI() {
+    setRefreshing(true);
+    const distanceResponse = await calculateDistance(businesses, location);
+    setDistances(distanceResponse);
+    setRefreshing(false);
+  }
+
   useEffect(() => {
     if (isEmpty(businesses)) {
       setBusinessesFromAPI();
+    }
+    if (isEmpty(distances)) {
+      setDistancesFromAPI();
     }
   }, []);
 
