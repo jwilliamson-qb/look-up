@@ -22,6 +22,8 @@ export const queryBusinesses = async () => {
           3,
           6,
           7,
+          10,
+          11,
           14,
           15,
           16,
