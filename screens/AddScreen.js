@@ -112,7 +112,7 @@ export default function AddScreen() {
             <Label style={styles.labelText}>Link (URL to Website)</Label>
             <Input onChangeText={(text) => setField('17', text)} />
           </Item>
-          <Button bordered onPress={submit} style={styles.buttonStyle} title="Submit">
+          <Button onPress={submit} style={styles.buttonStyle} title="Submit">
             <Text style={styles.buttonTextStyle}>Submit!</Text>
           </Button>
         </Form>
@@ -145,10 +145,13 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: 155,
     alignSelf: 'center',
+    backgroundColor: Colors.yellow,
   },
   buttonTextStyle: {
     flex: 1,
     textAlign: 'center',
+    fontWeight: 'bold',
+    color: Colors.white,
   },
   row: {
     flexDirection: 'row',
