@@ -3,6 +3,9 @@ import { API_TOKEN } from '../secrets';
 
 // eslint-disable-next-line import/prefer-default-export
 export const calculateDistance = async (businesses, locationData) => {
+  if (!locationData) {
+    return {};
+  }
   try {
     const concatenatedAddressString = concatenateAddresses(businesses);
     const concatenatedLatLong = concatenateLatLong(locationData);
@@ -10,8 +13,9 @@ export const calculateDistance = async (businesses, locationData) => {
     await fetch(
       'https://api.distancematrix.ai/maps/api/distancematrix/json' +
       `?key=${encodeURIComponent(API_TOKEN)}` +
-      `&origins=${encodeURIComponent(concatenatedAddressString)}` +
-      `&destinations=${encodeURIComponent(concatenatedLatLong)}`, {
+      `&origins=${encodeURIComponent(concatenatedLatLong)}` +
+      `&destinations=${encodeURIComponent(concatenatedAddressString)}`,
+      {
         method: 'get',
         headers: new Headers({
           'Content-Type': 'application/json',
@@ -21,23 +25,27 @@ export const calculateDistance = async (businesses, locationData) => {
     );
 
     const json = await response.json();
-    return json.rows;
+    return json.rows[0].elements;
   } catch (error) {
     console.error(error);
   }
 };
 
 const concatenateAddresses = (businesses) => {
-    let concatenatedAddressString = '';
-    businesses.forEach(business => {
-      const address = get(business, '7.value', '');
-      concatenatedAddressString += '|' + address;
-    });
+  let concatenatedAddressString = '';
+  businesses.forEach((business) => {
+    const address = get(business, '7.value', '');
+    if (address) {
+      if (concatenatedAddressString) {
+        concatenatedAddressString += '|';
+      }
+      concatenatedAddressString += address;
+    }
+  });
 
-    return concatenatedAddressString;
+  return concatenatedAddressString;
 };
 
 const concatenateLatLong = (locationData) => {
-    console.log(locationData);
-    return locationData.latitude + ',' + locationData.longitude;
+  return locationData.latitude + ',' + locationData.longitude;
 };

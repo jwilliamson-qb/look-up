@@ -32,7 +32,7 @@ export const queryBusinesses = async () => {
       }),
     });
     const json = await response.json();
-    console.log(json);
+    // console.log(json);
     // Return only the records (not the schema)
     return json.data;
   } catch (error) {
