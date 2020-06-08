@@ -2,6 +2,8 @@ import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import BusinessList from './BusinessList';
 
+import Colors from '../constants/Colors';
+
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
@@ -17,7 +19,7 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.black,
   },
   developmentModeText: {
     marginBottom: 20,
