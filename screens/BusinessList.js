@@ -58,15 +58,16 @@ const BusinessList = (props) => {
         data={sortedBusinesses}
         style={styles.container}
         keyExtractor={(item) => get(item, '3.value') + ''}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           if (!JSON.stringify(item).toUpperCase().includes(filterText.toUpperCase())) {
             return null;
           }
+
           return (
             <TouchableOpacity
               key={get(item, '3.value')}
               style={styles.view}
-              onPress={() => navigation.navigate('Detail', { detail: item })}
+              onPress={() => navigation.navigate('Detail', { detail: item, index })}
             >
               <View style={styles.leftSide}>
                 <Text style={styles.type}>{get(item, '15.value', '')}</Text>
