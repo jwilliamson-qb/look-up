@@ -1,6 +1,6 @@
 import React from 'react';
 import get from 'lodash/get';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform } from 'react-native';
 import colors from '../constants/Colors';
 
 const BusinessDetail = (props) => {
@@ -32,9 +32,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 5,
+    fontFamily: Platform.OS === 'ios' ? 'Gill Sans' : '',
   },
   subTitle: {
     fontSize: 15,
